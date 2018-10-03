@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>FTT - AJAX - API 01</title>
+<script>
+
+function loadDoc(query) {
+	  var xhttp = new XMLHttpRequest();
+	  
+	  xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	     document.getElementById("rawdata").innerHTML = this.responseText;
+	     
+	     var JSONObject = JSON.parse(this.responseText);
+	     
+	     document.getElementById("resumo").innerHTML = JSONObject["Abstract"];
+	     
+	     document.getElementById("texto").innerHTML = JSONObject["AbstractText"];
+	     
+	    }
+	  };
+	  
+	  xhttp.open("GET", "https://api.duckduckgo.com/?format=json&pretty=1&q=" + query, true);
+	  xhttp.send();
+	}
+
+</script>
+</head>
+<body>
+<button onclick="loadDoc(document.getElementById('searchBox').value);">Get query</button>
+<input id="searchBox" type="text" required></input>
+<hr>
+<p id="resumo"></p>
+<p id="texto"></p>
+<p id="rawdata"></p>
+</body>
+</html>

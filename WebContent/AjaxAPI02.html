@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>FTT - AJAX - API 02</title>
+<script>
+
+function loadDoc() {
+	  var xhttp = new XMLHttpRequest();
+	  
+	  xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	     document.getElementById("textao").innerHTML = this.responseText;
+	    }
+	  };
+	  xhttp.open("GET", "data/info.txt", true);
+	  xhttp.send();
+	}
+
+</script>
+</head>
+<body>
+<button onclick="loadDoc();">Get text</button>
+<hr>
+<p id="textao"></p>
+</body>
+</html>

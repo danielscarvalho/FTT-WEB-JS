@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>FTT - AJAX - API 04</title>
+<script>
+
+function loadDoc(query) {
+
+	// Obtenha sua propria chave
+	// https://newsapi.org
+	// Referencia: https://newsapi.org/docs/get-started
+	
+	let KEY = 'a471bfae6bea4870828911cc205e47e9';
+
+	let url = 'https://newsapi.org/v2/everything?' +
+		          'q=' + query + '&' +
+		          'from=2018-10-03&' +
+		          'sortBy=popularity&' +
+		          'apiKey=' + KEY;
+
+    const Http = new XMLHttpRequest();
+
+    Http.open("GET", url);
+    Http.send();
+    
+    //Callback
+    //Lambda
+    Http.onreadystatechange = (e) => {
+                if (Http.readyState === XMLHttpRequest.DONE ) {
+                    renderNews(JSON.parse(Http.responseText));
+                }
+            }
+
+} //loadDoc
+
+function renderNews(newsJson) {
+    let counter = 0;
+
+    for (let news of newsJson["articles"]) {
+        let artigo = document.createElement('article'); //Artigo
+
+        let h2Titulo = document.createElement('h2'); //Titulo
+        h2Titulo.innerHTML = counter + ":" + news["title"];
+
+        let pTexto = document.createElement('p'); //Texto
+        pTexto.innerHTML = news["description"];
+
+        artigo.appendChild(h2Titulo);
+        artigo.appendChild(pTexto);
+
+        document.getElementById("newsSection").appendChild(artigo);
+
+        counter++;
+    } //for
+
+} //renderNews
+
+</script>
+</head>
+<body>
+<button onclick="loadDoc(document.getElementById('searchBox').value);">Get query</button>
+<input id="searchBox" type="text" required></input>
+<hr>
+<main>
+<section id="newsSection">
+</section>
+</main>
+</body>
+</html>
